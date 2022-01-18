@@ -1,7 +1,8 @@
-#ifndef GENERATEMINES_H_INCLUDED
-#define GENERATEMINES_H_INCLUDED
+#ifndef GENERATEMINES
+#define GENERATEMINES
+#include "constants.h"
 #include "../sources/generateMines.cpp"
 
-void generateMinesPositions(int* positions);
+void generateMinesBoard(bool minesBoard[][BOARD_SIZE]);
 
-#endif // GENERATEMINES_H_INCLUDED
+#endif

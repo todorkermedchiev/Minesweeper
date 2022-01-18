@@ -5,12 +5,14 @@
 
 using namespace std;
 
-void generateMinesPositions(int* positions)
+void generateMinesBoard(bool minesBoard[][BOARD_SIZE])
 {
-    const int MINES_COUNT = 10;
     bool isValidPosition = true;
+    int positions[MINES_COUNT] = {};
     unsigned int position = 0;
     unsigned int index = 0;
+    int row = 0;
+    int column = 0;
     srand(time(NULL));
 
     while (index < MINES_COUNT) {
@@ -30,5 +32,12 @@ void generateMinesPositions(int* positions)
             positions[index] = position;
             ++index;
         }
+    }
+
+    for (int i = 0; i < MINES_COUNT; ++i) {
+        row = positions[i] / 10;
+        column = positions[i] % 10;
+        cout << row << ' ' << column << endl;
+        minesBoard[row][column] = true;
     }
 }
