@@ -77,12 +77,14 @@ void print(char board[][11])
     }
 
     // Printing "printedBoard"
+    cout << endl;
     for (int i = 0; i < PRINTED_BOARD_ROWS; ++i) {
         for (int j = 0; j < PRINTED_BOARD_COLS; ++j) {
             cout << printedBoard[i][j];
         }
         cout << endl;
     }
+    cout << endl;
 
     // Used character set:
     // -69 = '╗'; -68 = '╝'; -56 = '╚'; -55 = '╔'; -51 = '═'; -70 = '║';
