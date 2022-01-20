@@ -19,9 +19,8 @@ void fillPrintedBoard(char board[][PRINTED_BOARD_COLS], char character = ' ')
     }
 }
 
-void print(char board[][11])
+void makeBorders(char printedBoard[][PRINTED_BOARD_COLS])
 {
-    char printedBoard[PRINTED_BOARD_ROWS][PRINTED_BOARD_COLS] = {};
     fillPrintedBoard(printedBoard);
 
     for (int row = 0; row < PRINTED_BOARD_ROWS; ++row) {
@@ -68,7 +67,10 @@ void print(char board[][11])
     printedBoard[0][PRINTED_BOARD_COLS - 1] = (char) -69; // '╗'
     printedBoard[PRINTED_BOARD_ROWS - 1][0] = (char) -56; // '╚'
     printedBoard[PRINTED_BOARD_ROWS - 1][PRINTED_BOARD_COLS - 1] = (char) -68; // '╝'
+}
 
+void print(char board[][BOARD_SIZE], char printedBoard[][PRINTED_BOARD_COLS])
+{
     // Adding elements from the board to the printed board
     for (int row = 0; row < BOARD_SIZE; ++row) {
         for (int column = 0; column < BOARD_SIZE; ++column) {

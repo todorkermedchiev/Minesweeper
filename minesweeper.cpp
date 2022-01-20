@@ -16,8 +16,14 @@ int main()
     char command;
 
     bool minesBoard[BOARD_SIZE][BOARD_SIZE] = {};
+    char printedBoard[PRINTED_BOARD_ROWS][PRINTED_BOARD_COLS] = {};
+    makeBorders(printedBoard);
     int minesCoordinates[MINES_COUNT] = {};
     generateMinesBoard(minesBoard, minesCoordinates);
+
+    // bool allMinesAreMarked = true;
+    bool isMine = false;
+    int markedMines = 0;
 
     char board[BOARD_SIZE][BOARD_SIZE] = {};
 
@@ -39,7 +45,7 @@ int main()
 
     int nearbyMinesCount = 0;
     while (true) {
-        print(board);
+        print(board, printedBoard);
         cout << "Enter the coordinates and the command:" << endl;
         cout << "[row] [column] [command] (\"s\" to show and \"m\" to mark)" << endl;
 
@@ -56,8 +62,12 @@ int main()
 
         if (command == 's') { // show
             if (minesBoard[row][column]) {
-                board[row][column] = 'X';
-                print(board);
+                for (int i = 0; i < MINES_COUNT; ++i) {
+                    row = minesCoordinates[i] / 10;
+                    column = minesCoordinates[i] % 10;
+                    board[row][column] = 'X';
+                }
+                print(board, printedBoard);
                 cout << "Game Over!" << endl;
                 return 0;
             }
@@ -76,7 +86,32 @@ int main()
             }
         }
         else if (command == 'm') {
+            // Unmarking
+            if (board[row][column] == '!') {
+                board[row][column] = ' ';
+                continue;
+            }
+
+            // Marking
             board[row][column] = '!';
+
+            // Checking if the marked position is mine
+            isMine = false;
+            for (int i = 0; i < MINES_COUNT; ++i) {
+                if ((row * 10 + column) == minesCoordinates[i]) {
+                    isMine = true;
+                }
+            }
+
+            if (isMine) {
+                ++markedMines;
+            }
+
+            if (markedMines == MINES_COUNT) {
+                // All mines are marked
+                print(board, printedBoard);
+                break;
+            }
         }
     }
 

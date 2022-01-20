@@ -5,6 +5,7 @@
 
 void fillBoard(char [][BOARD_SIZE], char);
 void fillPrintedBoard(char [][PRINTED_BOARD_COLS], char);
-void print(char [][BOARD_SIZE]);
+void makeBorders(char [][PRINTED_BOARD_COLS]);
+void print(char [][BOARD_SIZE], char [][PRINTED_BOARD_COLS]);
 
 #endif
