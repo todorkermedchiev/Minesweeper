@@ -10,112 +10,143 @@ bool validateInput(int value, int minValue, int maxValue)
     return (value >= minValue && value <= maxValue);
 }
 
+void input(int &row, int &column, char &command, char board[][BOARD_SIZE])
+{
+    int rowIn = 0, columnIn = 0;
+    char commandIn;
+    cout << "Enter the coordinates and the command:" << endl;
+    cout << "[row] [column] [command] (\"s\" to show and \"m\" to mark)" << endl;
+
+    cin >> rowIn >> columnIn >> commandIn;
+
+    // Input check
+    if (!validateInput(rowIn, 1, 9) ||
+        !validateInput(columnIn, 1, 9) ||
+        !(commandIn == 's' || commandIn == 'm')) {
+        cout << endl << "Invalid coordinates or command!" << endl << endl;
+        input(rowIn, columnIn, commandIn, board);
+    }
+
+    if(board[rowIn][columnIn] >= '0' && board[rowIn][columnIn] <= '9') {
+        // There is a number between 0 and 9 on the current position, so this position is already showed
+        cout << endl << "You have already showed this. Please try another one!" << endl << endl;
+        input(rowIn, columnIn, commandIn, board);
+    }
+
+    row = rowIn;
+    column = columnIn;
+    command = commandIn;
+}
+
+// The function returns true when the player hit a mine
+bool show(int row,
+          int column,
+          char board[][BOARD_SIZE],
+          bool minesBoard[][BOARD_SIZE],
+          int minesCoordinates[MINES_COUNT])
+{
+    int nearbyMinesCount = 0;
+    if (minesBoard[row][column]) { // This is a mine
+        // Finding the other mines
+        for (int i = 0; i < MINES_COUNT; ++i) {
+            row = minesCoordinates[i] / 10;
+            column = minesCoordinates[i] % 10;
+            board[row][column] = 'X';
+        }
+        return true;
+    }
+
+    // Finding the number of the surrounding mines
+    for (int i = row - 1; i <= row + 1; ++i) {
+        for (int j = column - 1; j <= column + 1; ++j) {
+            if (minesBoard[i][j]) {
+                ++nearbyMinesCount;
+            }
+        }
+    }
+
+    board[row][column] = nearbyMinesCount + '0';
+    return false; // The function return false, when this is not a mine
+}
+
+void mark(int row,
+          int column,
+          char board[][BOARD_SIZE],
+          int minesCoordinates[MINES_COUNT],
+          int &markedMines)
+{
+    bool isMine = false;
+    // Check if this position is marked, so it can be unmarked
+    if (board[row][column] == '!') {
+        board[row][column] = ' ';
+        return;
+    }
+
+    // Marking
+    board[row][column] = '!';
+
+    // Checking if the marked position is mine
+    for (int i = 0; i < MINES_COUNT; ++i) {
+        if ((row * 10 + column) == minesCoordinates[i]) {
+            isMine = true;
+        }
+    }
+
+    if (isMine) {
+        ++markedMines;
+    }
+}
+
 int main()
 {
     int row = 0, column = 0;
     char command;
 
+    // Matrix with the characters
+    char board[BOARD_SIZE][BOARD_SIZE] = {};
+    fillBoard(board);
+
+    // Matrix and array with the mines
     bool minesBoard[BOARD_SIZE][BOARD_SIZE] = {};
-    char printedBoard[PRINTED_BOARD_ROWS][PRINTED_BOARD_COLS] = {};
-    makeBorders(printedBoard);
     int minesCoordinates[MINES_COUNT] = {};
     generateMinesBoard(minesBoard, minesCoordinates);
 
-    // bool allMinesAreMarked = true;
-    bool isMine = false;
+    // Matrix, which will be printed (with borders)
+    char printedBoard[PRINTED_BOARD_ROWS][PRINTED_BOARD_COLS];
+    makeBorders(printedBoard);
+
     int markedMines = 0;
-
-    char board[BOARD_SIZE][BOARD_SIZE] = {};
-
-    // Filling the whole board with spaces
-    fillBoard(board);
-
-    // Filling the first row, the last row, the first column and the last column with the numbers from 1 to 9
-    for (int i = 1; i < BOARD_SIZE - 1; ++i) {
-        board[0][i] = i + '0';
-        board[i][0] = i + '0';
-        board[10][i] = i + '0';
-        board[i][10] = i + '0';
-    }
 
     // Printing the coordinates (for debugging)
     for (int i = 0; i < MINES_COUNT; ++i) {
         cout << minesCoordinates[i] << endl;
     }
 
-    int nearbyMinesCount = 0;
     while (true) {
         print(board, printedBoard);
-        cout << "Enter the coordinates and the command:" << endl;
-        cout << "[row] [column] [command] (\"s\" to show and \"m\" to mark)" << endl;
 
-        cin >> row >> column >> command;
-        cout << endl;
-
-        // Input check
-        if (!validateInput(row, 1, 9) ||
-            !validateInput(column, 1, 9) ||
-            !(command != 's' || command != 'm')) {
-            cout << "Invalid coordinates or command" << endl;
-            continue;
-        }
+        // Input
+        input(row, column, command, board);
 
         if (command == 's') { // show
-            if (minesBoard[row][column]) {
-                for (int i = 0; i < MINES_COUNT; ++i) {
-                    row = minesCoordinates[i] / 10;
-                    column = minesCoordinates[i] % 10;
-                    board[row][column] = 'X';
-                }
+            if (show(row, column, board, minesBoard, minesCoordinates)) {
+                // The function returned true, so the player hit a mine
                 print(board, printedBoard);
-                cout << "Game Over!" << endl;
-                return 0;
-            }
-            else {
-                // Finding the number of the surrounding mines
-                nearbyMinesCount = 0;
-                for (int i = row - 1; i <= row + 1; ++i) {
-                    for (int j = column - 1; j <= column + 1; ++j) {
-                        if (minesBoard[i][j]) {
-                            ++nearbyMinesCount;
-                        }
-                    }
-                }
-
-                board[row][column] = nearbyMinesCount + '0';
+                cout << "_ _ _ Game Over! _ _ _" << endl;
+                break;
             }
         }
-        else if (command == 'm') {
-            // Unmarking
-            if (board[row][column] == '!') {
-                board[row][column] = ' ';
-                continue;
-            }
-
-            // Marking
-            board[row][column] = '!';
-
-            // Checking if the marked position is mine
-            isMine = false;
-            for (int i = 0; i < MINES_COUNT; ++i) {
-                if ((row * 10 + column) == minesCoordinates[i]) {
-                    isMine = true;
-                }
-            }
-
-            if (isMine) {
-                ++markedMines;
-            }
+        else if (command == 'm') { // mark
+            mark(row, column, board, minesCoordinates, markedMines);
 
             if (markedMines == MINES_COUNT) {
                 // All mines are marked
                 print(board, printedBoard);
+                cout << "_ _ _ You Win! _ _ _" << endl;
                 break;
             }
         }
     }
-
-    cout << "You Win!!!" << endl;
 
     return 0;
 }
