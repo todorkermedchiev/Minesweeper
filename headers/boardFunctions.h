@@ -1,6 +1,5 @@
-#ifndef __BOARDFUNCTIONS
-#define __BOARDFUNCTIONS
-#include <iostream>
+#ifndef __BOARD_FUNCTIONS
+#define __BOARD_FUNCTIONS
 #include "constants.h"
 
 using namespace std;
@@ -85,24 +84,4 @@ void makeBorders(char printedBoard[][PRINTED_BOARD_COLS])
     // -50 = '╬'; -53 = '╦'; -54 = '╩'; -52 = '╠'; -71 = '╣';
 }
 
-void print(char board[][BOARD_SIZE], char printedBoard[][PRINTED_BOARD_COLS])
-{
-    // Adding elements from the board to the printed board
-    for (int row = 0; row < BOARD_SIZE; ++row) {
-        for (int column = 0; column < BOARD_SIZE; ++column) {
-            printedBoard[row * 2 + 1][column * 4 + 2] = board[row][column];
-        }
-    }
-
-    // Printing "printedBoard"
-    cout << endl;
-    for (int i = 0; i < PRINTED_BOARD_ROWS; ++i) {
-        for (int j = 0; j < PRINTED_BOARD_COLS; ++j) {
-            cout << printedBoard[i][j];
-        }
-        cout << endl;
-    }
-    cout << endl;
-}
-
-#endif // __BOARDFUNCTIONS
+#endif // __BOARD_FUNCTIONS
