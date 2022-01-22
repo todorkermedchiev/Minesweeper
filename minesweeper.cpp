@@ -1,7 +1,21 @@
+/**
+*
+* Solution to course project # 13
+* Introduction to programming course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2021/2022
+*
+* @author Todor Kermedchiev
+* @idnumber 0MI0600063
+* @compiler GCC
+*
+* File with main() function
+*
+*/
 #include <iostream>
-#include "headers/generalFunctions.h"
-#include "headers/boardFunctions.h"
 #include "headers/constants.h"
+#include "headers/boardFunctions.h"
+#include "headers/generalFunctions.h"
 #include "headers/inputOutputFunctions.h"
 
 int main()
@@ -23,11 +37,6 @@ int main()
     makeBorders(printedBoard);
 
     int markedMines = 0;
-
-    // Printing the coordinates (for debugging)
-    for (int i = 0; i < MINES_COUNT; ++i) {
-        cout << minesCoordinates[i] << endl;
-    }
 
     while (true) {
         print(board, printedBoard);

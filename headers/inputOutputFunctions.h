@@ -1,3 +1,17 @@
+/**
+*
+* Solution to course project # 13
+* Introduction to programming course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2021/2022
+*
+* @author Todor Kermedchiev
+* @idnumber 0MI0600063
+* @compiler GCC
+*
+* File with functions to communicate with the user
+*
+*/
 #ifndef __INPUT_OUTPUT_FUNCTIONS
 #define __INPUT_OUTPUT_FUNCTIONS
 #include <iostream>

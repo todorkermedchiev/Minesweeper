@@ -1,10 +1,24 @@
+/**
+*
+* Solution to course project # 13
+* Introduction to programming course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2021/2022
+*
+* @author Todor Kermedchiev
+* @idnumber 0MI0600063
+* @compiler GCC
+*
+* File with functions which modify the board
+*
+*/
 #ifndef __BOARD_FUNCTIONS
 #define __BOARD_FUNCTIONS
 #include "constants.h"
 
 using namespace std;
 
-void fillBoard(char board [][BOARD_SIZE], char character = ' ')
+void fillBoard(char board[BOARD_SIZE][BOARD_SIZE], char character = ' ')
 {
     for (int row = 0; row < BOARD_SIZE; ++row) {
         for (int column = 0; column < BOARD_SIZE; ++column) {
@@ -21,7 +35,7 @@ void fillBoard(char board [][BOARD_SIZE], char character = ' ')
     }
 }
 
-void fillPrintedBoard(char board[][PRINTED_BOARD_COLS], char character = ' ')
+void fillPrintedBoard(char board[PRINTED_BOARD_ROWS][PRINTED_BOARD_COLS], char character = ' ')
 {
     for (int row = 0; row < PRINTED_BOARD_ROWS; ++row) {
         for (int column = 0; column < PRINTED_BOARD_COLS; ++column) {
@@ -30,7 +44,7 @@ void fillPrintedBoard(char board[][PRINTED_BOARD_COLS], char character = ' ')
     }
 }
 
-void makeBorders(char printedBoard[][PRINTED_BOARD_COLS])
+void makeBorders(char printedBoard[PRINTED_BOARD_ROWS][PRINTED_BOARD_COLS])
 {
     fillPrintedBoard(printedBoard);
 
@@ -50,24 +64,26 @@ void makeBorders(char printedBoard[][PRINTED_BOARD_COLS])
                 // Adding corner characters between the cells
                 printedBoard[row][column] = (char) -50; // '╬'
 
-                // Adding corner characters on the first row between the cells
-                if (row == 0) {
+                switch (row) {
+                case 0:
+                    // Adding corner characters on the first row between the cells
                     printedBoard[row][column] = (char) -53; // '╦'
-                }
-
-                // Adding corner characters on the last row between the cells
-                if (row == PRINTED_BOARD_ROWS - 1) {
+                    break;
+                case PRINTED_BOARD_ROWS - 1:
+                    // Adding corner characters on the last row between the cells
                     printedBoard[row][column] = (char) -54; // '╩'
+                    break;
                 }
 
-                // Adding corner characters on the first column between the cells
-                if (column == 0) {
+                switch (column) {
+                case 0:
+                    // Adding corner characters on the first column between the cells
+                    break;
                     printedBoard[row][column] = (char) -52; // '╠'
-                }
-
-                // Adding corner characters on the last column between the cells
-                if (column == PRINTED_BOARD_COLS - 1) {
+                case PRINTED_BOARD_COLS - 1:
+                    // Adding corner characters on the last column between the cells
                     printedBoard[row][column] = (char) -71; // '╣'
+                    break;
                 }
             }
         }

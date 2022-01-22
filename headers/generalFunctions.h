@@ -1,3 +1,17 @@
+/**
+*
+* Solution to course project # 13
+* Introduction to programming course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2021/2022
+*
+* @author Todor Kermedchiev
+* @idnumber 0MI0600063
+* @compiler GCC
+*
+* File with the main logic
+*
+*/
 #ifndef __GENERAL_FUNCTIONS
 #define __GENERAL_FUNCTIONS
 #include "constants.h"
