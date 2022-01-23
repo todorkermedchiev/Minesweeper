@@ -86,29 +86,41 @@ bool show(int row,
     return false; // The function return false, when this is not a mine
 }
 
+bool isMine(int row, int column, int minesCoordinates[])
+{
+    for (int i = 0; i < MINES_COUNT; ++i) {
+        if ((row * 10 + column) == minesCoordinates[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void mark(int row,
           int column,
           char board[][BOARD_SIZE],
           int minesCoordinates[MINES_COUNT],
-          int &markedMines) {
-    bool isMine = false;
+          int &markedMines,
+          int &markedCells) {
     // Check if this position is marked, so it can be unmarked
     if (board[row][column] == '!') {
         board[row][column] = ' ';
+        --markedCells;
+
+        // If the unmarked cell is actually an explosive, the marked mines counter must be decreased
+        if (isMine(row, column, minesCoordinates)) {
+            --markedMines;
+        }
+
         return;
     }
 
     // Marking
     board[row][column] = '!';
+    ++markedCells;
 
-    // Checking if the marked position is mine
-    for (int i = 0; i < MINES_COUNT; ++i) {
-        if ((row * 10 + column) == minesCoordinates[i]) {
-            isMine = true;
-        }
-    }
-
-    if (isMine) {
+    // If the marked cell is actually an explosive, the marked mines counter must be increased
+    if (isMine(row, column, minesCoordinates)) {
         ++markedMines;
     }
 }

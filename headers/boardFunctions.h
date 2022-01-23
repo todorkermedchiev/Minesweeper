@@ -78,8 +78,8 @@ void makeBorders(char printedBoard[PRINTED_BOARD_ROWS][PRINTED_BOARD_COLS])
                 switch (column) {
                 case 0:
                     // Adding corner characters on the first column between the cells
-                    break;
                     printedBoard[row][column] = (char) -52; // '╠'
+                    break;
                 case PRINTED_BOARD_COLS - 1:
                     // Adding corner characters on the last column between the cells
                     printedBoard[row][column] = (char) -71; // '╣'

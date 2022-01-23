@@ -37,6 +37,7 @@ int main()
     makeBorders(printedBoard);
 
     int markedMines = 0;
+    int markedCells = 0;
 
     while (true) {
         print(board, printedBoard);
@@ -53,10 +54,10 @@ int main()
             }
         }
         else if (command == 'm') { // mark
-            mark(row, column, board, minesCoordinates, markedMines);
+            mark(row, column, board, minesCoordinates, markedMines, markedCells);
 
-            if (markedMines == MINES_COUNT) {
-                // All mines are marked
+            if (markedMines == MINES_COUNT && markedCells == MINES_COUNT) {
+                // All mines are marked and no other cells are marked
                 print(board, printedBoard);
                 cout << "_ _ _ You Win! _ _ _" << endl;
                 break;
