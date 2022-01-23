@@ -42,9 +42,15 @@ void input(int &row, int &column, char &command, char board[BOARD_SIZE][BOARD_SI
         input(rowIn, columnIn, commandIn, board);
     }
 
-    if(board[rowIn][columnIn] >= '0' && board[rowIn][columnIn] <= '9') {
+    if (board[rowIn][columnIn] >= '0' && board[rowIn][columnIn] <= '9') {
         // There is a number between 0 and 9 on the current position, so this position is already showed
-        cout << "\n!!! You have already showed this. Please try another one !!!\n\n";
+        cout << "\n!!! You have already showed this cell. Please try another one !!!\n\n";
+        input(rowIn, columnIn, commandIn, board);
+    }
+
+    if (board[rowIn][columnIn] == '!' && commandIn == 's') {
+        // This position is already marked, so it can't be shown
+        cout << "\n!!! You can't show marked cell. Please unmark it first !!!\n\n";
         input(rowIn, columnIn, commandIn, board);
     }
 
