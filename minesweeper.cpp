@@ -47,7 +47,7 @@ int main()
 
         if (command == 's') { // show
             if (show(row, column, board, minesBoard, minesCoordinates)) {
-                // The function returned true, so the player hit a mine
+                // The function returned true, so the player hit an explosive
                 print(board, printedBoard);
                 cout << "_ _ _ Game Over! _ _ _" << endl;
                 break;

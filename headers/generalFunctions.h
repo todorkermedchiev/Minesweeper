@@ -21,7 +21,7 @@
 
 using namespace std;
 
-void generateMines(bool minesBoard[][BOARD_SIZE], int minesCoordinates[MINES_COUNT] = {})
+void generateMines(bool minesBoard[BOARD_SIZE][BOARD_SIZE], int minesCoordinates[MINES_COUNT] = {})
 {
     bool isValidPosition = true;
     unsigned int position = 0;
@@ -59,8 +59,8 @@ void generateMines(bool minesBoard[][BOARD_SIZE], int minesCoordinates[MINES_COU
 // The function returns true when the player hit a mine
 bool show(int row,
           int column,
-          char board[][BOARD_SIZE],
-          bool minesBoard[][BOARD_SIZE],
+          char board[BOARD_SIZE][BOARD_SIZE],
+          bool minesBoard[BOARD_SIZE][BOARD_SIZE],
           int minesCoordinates[MINES_COUNT]) {
     int nearbyMinesCount = 0;
     if (minesBoard[row][column]) { // This is a mine
@@ -98,7 +98,7 @@ bool isMine(int row, int column, int minesCoordinates[])
 
 void mark(int row,
           int column,
-          char board[][BOARD_SIZE],
+          char board[BOARD_SIZE][BOARD_SIZE],
           int minesCoordinates[MINES_COUNT],
           int &markedMines,
           int &markedCells) {

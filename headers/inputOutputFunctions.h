@@ -25,7 +25,7 @@ bool validateInput(int value, int minValue, int maxValue)
     return (value >= minValue && value <= maxValue);
 }
 
-void input(int &row, int &column, char &command, char board[][BOARD_SIZE])
+void input(int &row, int &column, char &command, char board[BOARD_SIZE][BOARD_SIZE])
 {
     int rowIn = 0, columnIn = 0;
     char commandIn;
@@ -53,7 +53,7 @@ void input(int &row, int &column, char &command, char board[][BOARD_SIZE])
     command = commandIn;
 }
 
-void print(char board[][BOARD_SIZE], char printedBoard[][PRINTED_BOARD_COLS])
+void print(char board[BOARD_SIZE][BOARD_SIZE], char printedBoard[PRINTED_BOARD_ROWS][PRINTED_BOARD_COLS])
 {
     // Adding elements from the board to the printed board
     for (int row = 0; row < BOARD_SIZE; ++row) {
